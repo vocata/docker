@@ -1,0 +1,44 @@
+services:
+  chatgpt-web:
+    image: mangydog/chatgpt-web
+    container_name: chatgpt-web
+    ports:
+      - "8080:3002"
+    environment:
+        # OpenAI API Key - https://platform.openai.com/overview
+      OPENAI_API_KEY: ""
+      # change this to an `accessToken` extracted from the ChatGPT site's `https://chat.openai.com/api/auth/session` response
+      OPENAI_ACCESS_TOKEN: ""
+      # OpenAI API Base URL - https://api.openai.com
+      OPENAI_API_BASE_URL: "https://api.openai.com"
+      # OpenAI API Model - https://platform.openai.com/docs/models
+      OPENAI_API_MODEL: gpt-3.5-turbo   # gpt-4
+      # Reverse Proxy
+      API_REVERSE_PROXY: ""
+      # timeout
+      TIMEOUT_MS: 100000
+      # Rate Limit
+      MAX_REQUEST_PER_HOUR: 1000
+      # Secret key
+      AUTH_SECRET_KEY: ""
+      # Socks Proxy Host
+      SOCKS_PROXY_HOST: clash-server
+      # Socks Proxy Port
+      SOCKS_PROXY_PORT: 7890
+      # HTTPS PROXY
+      HTTPS_PROXY: ""
+      # ALL PROXY
+      ALL_PROXY: ""
+    restart: unless-stopped
+    depends_on:
+      - clash-server
+    
+  clash-server: 
+    extends:
+      file: ../clash/docker-compose.yaml
+      service: clash-server
+
+  clash-web:
+    extends:
+      file: ../clash/docker-compose.yaml
+      service: clash-web

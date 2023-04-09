@@ -1,0 +1,10 @@
+services:
+  clash-server:
+    # docker run --rm -it -p 1935:1935 -p 1985:1985 -p 8080:8080 ossrs/srs:5
+    image: registry.cn-hangzhou.aliyuncs.com/ossrs/srs:5
+    container_name: srs5
+    ports:
+      - "8080:8080" # srs web
+      - "1935:1935" # rtmp
+      - "1985:1985" # srs http api
+    restart: unless-stopped

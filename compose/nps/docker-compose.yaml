@@ -1,0 +1,7 @@
+services:
+  nps:
+    image: ffdfgdfg/nps
+    network_mode: "host"
+    container_name: nps
+    volumes:
+      - ./conf:/conf

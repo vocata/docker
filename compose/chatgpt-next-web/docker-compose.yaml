@@ -1,0 +1,24 @@
+services:
+  chatgpt-netx-web:
+    image: mangydog/chatgpt-next-web
+    container_name: chatgpt-next-web
+    ports:
+      - "8080:3000"
+    environment:
+      OPENAI_API_KEY: ""
+      CODE: ""
+      BASE_URL: "api.openai.com"
+      PROTOCOL: "https"
+    restart: unless-stopped
+    depends_on:
+      - clash-server
+    
+  clash-server: 
+    extends:
+      file: ../clash/docker-compose.yaml
+      service: clash-server
+
+  clash-web:
+    extends:
+      file: ../clash/docker-compose.yaml
+      service: clash-web
